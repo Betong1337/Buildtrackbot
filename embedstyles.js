@@ -20,12 +20,24 @@ module.exports = {
             .setDescription("All Guild Projects" + " Page: " + page)
             .addFields(embedList)
     },
+    viewMyEmbed: function(title, embedList, page) {
+        return new EmbedBuilder()
+            .setColor(0x00FF99)
+            .setTitle(title)
+            .setDescription("Page: " + page)
+            .addFields(embedList)
+    },
     helpEmbed: function(commands) {
         return new EmbedBuilder()
             .setColor(0x00FF99)
             .setTitle("BTB Commands")
             .setDescription('List of All BTB Commands')
             .addFields(commands)
+    },
+    commentSectionEmbed: function(title, comments) {
+        return new EmbedBuilder()
+            .setColor(0x00FF99)
+            .setTitle(title)
+            .setDescription(comments)
     }
-
 };

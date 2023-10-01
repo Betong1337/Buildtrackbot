@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
-const gf = require('../general-functions.js');
 const db = require('../database-connection.js');
-const embedStyles = require('../embedstyles.js');
 
 module.exports = { 
 	data: new SlashCommandBuilder()

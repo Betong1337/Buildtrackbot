@@ -47,6 +47,27 @@ CheckProjectKeyDuplicate = function(projectKey) {
     });
 }
 
+CheckCommentKeyDuplicate = function(commentKey) {
+    return new Promise(resolve => {
+        try {
+            var conn = mysql.createConnection(DBCONFIG);
+            const sql = "SELECT commentKey FROM comments WHERE commentKey = ?";
+            conn.query(sql, [commentKey,], function(err, rows) {
+                if (rows.length === 0) {
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            });
+            conn.end((err) => {
+                if (err) throw new Error('CheckProjectKeyDuplicate_conn_end: ' + err);
+            });
+        } catch(error) {
+            console.log(error);
+        }
+    }); 
+}
+
 GetProject = function(projectKey) {
     return new Promise(resolve => {
         var conn = mysql.createConnection(DBCONFIG);
@@ -57,6 +78,20 @@ GetProject = function(projectKey) {
         });
         conn.end((err) => {
             if (err) throw new Error('GetProject_conn_end: ' + err);
+        });
+    });
+}
+
+GetUserProjects = function(username, guildID) {
+    return new Promise(resolve => {
+        var conn = mysql.createConnection(DBCONFIG);
+        const sql = "SELECT * FROM projects WHERE createdBy = ? AND guild = ?";
+        conn.query(sql, [username, guildID], function(err,rows) {
+            if (err) throw new Error('GetUserProjects: ' + err);
+            resolve(rows);
+        });
+        conn.end((err) => {
+            if (err) throw new Error('GetUserProjects: ' + err);
         });
     });
 }
@@ -124,4 +159,54 @@ GetGuildProjects = function(guildID) {
     });
 }
 
-module.exports = {InsertProject, CheckProjectKeyDuplicate, GetProject, updateMilestone, GetGuildProjects, updateRecord, delRecord, CheckIfProjectIsInGuild};
+InsertComment = function(guildID, projectkey, username, comment, commentKey) {
+    try {
+        var conn = mysql.createConnection(DBCONFIG);
+        const sql = "INSERT INTO comments (guildID, projectkey, comment, user, commentKey) VALUES (?,?,?,?,?)";
+        conn.query(sql, [guildID, projectkey, comment, username,commentKey], function(err) {
+            if (err) throw new Error('InsertComment: ' + err);
+        });
+        conn.end((err) => {
+            if (err) throw new Error('InsertComment_conn_end: ' + err);
+        });
+    } catch(error) {
+        console.log(error);
+    }
+}
+GetProjectComments = function(guildID, projectkey) {
+    try {
+        return new Promise(resolve => {
+            var conn = mysql.createConnection(DBCONFIG);
+            const sql = "SELECT * FROM comments WHERE guildID = ? AND projectkey = ?";
+            conn.query(sql, [guildID, projectkey], function(err, rows) {
+                resolve(rows);
+            });
+            conn.end((err) => {
+                if (err) throw new Error('GetProjectComments_conn_end: ' + err);
+            });
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+GetUserComments = function(username) {
+    try {
+        return new Promise(resolve => {
+            var conn = mysql.createConnection(DBCONFIG);
+            const sql = "SELECT * FROM comments WHERE user = ?";
+            conn.query(sql, [username,], function(err, rows) {
+                resolve(rows);
+            });
+            conn.end((err) => {
+                if (err) throw new Error('GetUserComments_conn_end: ' + err);
+            });
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {InsertProject, CheckProjectKeyDuplicate, GetProject, updateMilestone, GetGuildProjects, 
+                  updateRecord, delRecord, CheckIfProjectIsInGuild, GetUserProjects, InsertComment, GetProjectComments, 
+                  GetUserComments,CheckCommentKeyDuplicate};

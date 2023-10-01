@@ -1,0 +1,30 @@
+Fix:
+    In updateMilestone.js, check if project is in the same guild as the person. ✅
+
+Add:
+    View my projects✅
+    The owner gets the permission role when project created. ✅
+    Close project command.
+    View all closed Projects within the guild.
+    Add comments
+
+CRITICAL:
+    Refactor:
+        createProject✅
+        delProject✅
+        modifyProject✅
+        updateMilestone✅
+        viewGuildProjects ✅
+        viewProject✅
+
+Project Directory tree refactor:
+    BuildTrackBot
+        CommentSystem
+            comment.js
+            comments.js
+            mycomments.js
+        ProjectSystem
+            createProject.js
+            .....
+        
+

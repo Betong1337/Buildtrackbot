@@ -11,7 +11,7 @@ module.exports = {
             option
                 .setName('page')
                 .setDescription("Select Page")
-                .setRequired(true)
+                .setRequired(false)
         ),
         
 	async execute(interaction) {
@@ -28,8 +28,10 @@ module.exports = {
             var embedList = [];
             var guildName = interaction.guild.name;
             var guildName = guildName + "'s Projects";
-            const pageNumber = interaction.options.getInteger("page") - 1;
-            if (pageNumber < 0) {
+            let pageNumber = interaction.options.getInteger("page") - 1;
+            if (pageNumber === -1) {
+                pageNumber = 0;
+            } else if (pageNumber < 0) {
                 await interaction.reply("Page number can't be below 1!");
                 return;
             }
@@ -49,7 +51,6 @@ module.exports = {
             }
             const pages = chunkArray(embedList, 15);
             const pagelength = pages.length;
-
             if (pageNumber+1 > pagelength) {
                 await interaction.reply("That many pages dosen't exist!");
                 return;

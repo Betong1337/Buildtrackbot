@@ -81,11 +81,11 @@ module.exports = {
 
             const milestoneString = JSON.stringify(MilestoneDict);
 
-            var ProjectKey = gf.GenerateProjectKey();
+            var ProjectKey = gf.GenerateKey(1);
 
             let IsKeyUnique = await db.CheckProjectKeyDuplicate(ProjectKey);
             if (IsKeyUnique) {
-                ProjectKey = gf.GenerateProjectKey();
+                ProjectKey = gf.GenerateKey(1);
             }
 
             var guildObject = interaction.guild;
