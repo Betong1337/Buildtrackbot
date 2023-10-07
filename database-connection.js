@@ -207,6 +207,36 @@ GetUserComments = function(username) {
     }
 }
 
+GetComment = function(commentID) {
+    try {
+        return new Promise(resolve => {
+            var conn = mysql.createConnection(DBCONFIG);
+            const sql = "SELECT * FROM comments WHERE commentKey = ?";
+            conn.query(sql, [commentID,], function(err, rows) {
+                resolve(rows);
+            });
+            conn.end((err) => {
+                if (err) throw new Error('GetComment_conn_end: ' + err);
+            });
+        });
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+editComment = function(value, commentID) {
+    try {
+        var conn = mysql.createConnection(DBCONFIG);
+        const sql = "UPDATE comments SET comment = ? WHERE commentKey = ?";
+        conn.query(sql, [value, commentID]);
+        conn.end((err) => {
+            if (err) throw new Error('editComment_conn_end: ' + err);
+        });
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 module.exports = {InsertProject, CheckProjectKeyDuplicate, GetProject, updateMilestone, GetGuildProjects, 
                   updateRecord, delRecord, CheckIfProjectIsInGuild, GetUserProjects, InsertComment, GetProjectComments, 
-                  GetUserComments,CheckCommentKeyDuplicate};
+                  GetUserComments,CheckCommentKeyDuplicate,GetComment,editComment};

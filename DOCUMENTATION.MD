@@ -45,6 +45,7 @@ Comment system:
         /comments [projectkey]
         /mycomments [projectkey]
         /editcomment [projectkey] [commentID]
+        
     Example format:
         Comment 1 2023-09-09 21:02:
         user1234: Cleared 50%.
