@@ -236,7 +236,19 @@ editComment = function(value, commentID) {
         console.log(error);
     }
 }
+delComment = function(commentID) {
+    try {
+        var conn = mysql.createConnection(DBCONFIG);
+        const sql = "UPDATE comments SET deleted = ? WHERE commentKey = ?";
+        conn.query(sql, ['1', commentID]);
+        conn.end((err) => {
+            if (err) throw new Error('delComment_conn_end: ' + err);
+        });
+    } catch(error) {
+        console.log(error);
+    }
+}
 
 module.exports = {InsertProject, CheckProjectKeyDuplicate, GetProject, updateMilestone, GetGuildProjects, 
                   updateRecord, delRecord, CheckIfProjectIsInGuild, GetUserProjects, InsertComment, GetProjectComments, 
-                  GetUserComments,CheckCommentKeyDuplicate,GetComment,editComment};
+                  GetUserComments,CheckCommentKeyDuplicate,GetComment,editComment,delComment};

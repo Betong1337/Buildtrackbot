@@ -32,6 +32,7 @@ module.exports = {
                 let commentTimeStamp = commentData.comment_timestamp;
                 let projectKey = commentData.projectkey;
                 let commentKey = commentData.commentKey;
+                let IscommentDeleted = commentData.deleted;
 
                 const date = new Date(commentTimeStamp);
 
@@ -42,10 +43,11 @@ module.exports = {
                 const minutes = date.getMinutes();
 
                 const formattedDateTime = `${day} ${month} ${year} ${hours}:${minutes}`;
-
-                comments = comments + "**" + commentCount + ". " + commentKey + "** " + '*"' + 
+                if (IscommentDeleted === 0) {
+                    comments = comments + "**" + commentCount + ". " + commentKey + "** " + '*"' + 
                            comment + '"*' + " __" + formattedDateTime + "__" + " **" + projectKey + "**" + "\n\n";
-                commentCount++;
+                    commentCount++;
+                }
             }
             const CommentEmbed = embedStyles.commentSectionEmbed(username + "'s Comments", comments);
             interaction.reply({embeds: [CommentEmbed]});
