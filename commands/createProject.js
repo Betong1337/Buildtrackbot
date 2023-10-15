@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, Act
 const gf = require('../general-functions.js');
 const db = require('../database-connection.js');
 const embedStyles = require('../embedstyles.js');
+const log = require('../error_log.js');
 
 module.exports = { 
 	data: new SlashCommandBuilder()
@@ -104,6 +105,7 @@ module.exports = {
             await submitted.editReply({embeds: [projectEmbed]});
             await submitted.followUp({content: "Don't forget to add the project role to other builders!"});
         } catch(error) {
+            log.errror(error);
             console.log(error);
             await interaction.reply("An error occured while executing this command.");  
         }

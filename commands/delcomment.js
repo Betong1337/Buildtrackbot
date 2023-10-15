@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
 const db = require('../database-connection.js');
 const embedStyles = require('../embedstyles.js');
+const log = require('../error_log.js');
 
 module.exports = { 
 	data: new SlashCommandBuilder()
@@ -65,6 +66,7 @@ module.exports = {
             await submitted.editReply('Comment has been Deleted!');
 
         } catch (error) {
+            log.error(error);
             console.log(error);
             await interaction.reply("An error occured while executing this command.");
         }

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
 const db = require('../database-connection.js');
 const embedStyles = require('../embedstyles.js');
-
+const log = require('../error_log.js');
 module.exports = { 
 	data: new SlashCommandBuilder()
         .setName('mycomments')
@@ -9,6 +9,7 @@ module.exports = {
 
 	async execute(interaction) {
         try {
+
             var interactionOptions = interaction.options;
 
             let guild = interaction.guild;
@@ -53,6 +54,7 @@ module.exports = {
             interaction.reply({embeds: [CommentEmbed]});
 
         } catch (error) {
+            log.error(error);
             console.log(error);
             await interaction.reply("An error occured while executing this command.");
         }

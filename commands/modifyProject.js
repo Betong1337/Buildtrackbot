@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, Act
 const gf = require('../general-functions.js');
 const db = require('../database-connection.js');
 const embedStyles = require('../embedstyles.js');
-
+const log = require('../error_log.js');
 module.exports = { 
 	data: new SlashCommandBuilder()
         .setName('modproject')
@@ -113,6 +113,7 @@ module.exports = {
                 
             await submitted.editReply("The Project has been modified!");
         } catch(error) {
+            log.error(error);
             console.log(error);
             await interaction.reply("An error occured while executing this command.")
         }

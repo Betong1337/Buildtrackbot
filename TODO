@@ -29,4 +29,5 @@ Project Directory tree refactor:
 
 
 Error log System
-
+    1 file per day
+    append error to file

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
 const db = require('../database-connection.js');
-const gf = require('../general-functions.js')
+const gf = require('../general-functions.js');
+const log = require('../error_log.js');
 
 module.exports = { 
 	data: new SlashCommandBuilder()
@@ -71,6 +72,7 @@ module.exports = {
             interaction.reply("Your comment " + '"*' + comment + '*"' + " has been sent!");
 
         } catch (error) {
+            log.error(error);
             console.log(error);
             await interaction.reply("An error occured while executing this command.");
         }
