@@ -1,12 +1,15 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
-const db = require('../database-connection.js');
-const embedStyles = require('../embedstyles.js');
-const log = require('../error_log.js');
+const config = require('../../config.js');
+const { paths } = config;
+const db = require(paths.db);
+const gf = require(paths.generalFuncs);
+const log = require(paths.logscripts);
+const embedStyles = require(paths.embedstyle);
 
 module.exports = { 
 	data: new SlashCommandBuilder()
-        .setName('delcomment')
-		.setDescription('Delete your comment!')
+        .setName('editcomment')
+		.setDescription('Edit your comment!')
         .addStringOption(option => 
             option
                 .setName('commentid')
@@ -24,13 +27,25 @@ module.exports = {
                 return;
             }
 
+            const commentData = await db.GetComment(CommentKey);
+
+            const commentmsg = commentData[0].comment;
+
+            const IsCommentDeleted = commentData[0].deleted;
+
+            if (IsCommentDeleted === 1) {
+                interaction.reply("Comment Key is not valid!");
+                return;
+            }
+
             const modal = new ModalBuilder()
-			.setCustomId('MCCommentDelete')
-			.setTitle('Delete Comment');
+			.setCustomId('MCCommentEdit')
+			.setTitle('Edit Comment');
 
 		    const CommentMSG = new TextInputBuilder()
-            .setCustomId('MCCommentConfirmDelete')
-            .setLabel("Type 'DELETE' to confirm")
+            .setCustomId('MCCommentMsg')
+            .setLabel("Edit Comment")
+            .setValue(commentmsg)
             .setMaxLength(50)
             .setMinLength(1)
             .setRequired(true)
@@ -54,16 +69,15 @@ module.exports = {
             if (!submitted) return;
             await submitted.deferReply();
             
-            let DeleteConfirm = submitted.fields.getTextInputValue('MCCommentConfirmDelete');
+            let modifiedComment = submitted.fields.getTextInputValue('MCCommentMsg');
 
-            if (DeleteConfirm != "DELETE") {
-                await submitted.editReply('Wrong, try again!');
+            if (modifiedComment === commentmsg) {
+                await submitted.editReply('Comment has been edited!');
                 return;
             }
 
-            //db.editComment("*DELETED*", CommentKey);
-            db.delComment(CommentKey);
-            await submitted.editReply('Comment has been Deleted!');
+            db.editComment(modifiedComment, CommentKey);
+            await submitted.editReply('Comment has been edited!');
 
         } catch (error) {
             log.error(error);

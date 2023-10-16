@@ -1,7 +1,12 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
-const db = require('../database-connection.js');
-const embedStyles = require('../embedstyles.js');
-const log = require('../error_log.js');
+
+const config = require('../../config.js');
+const { paths } = config;
+const db = require(paths.db);
+const gf = require(paths.generalFuncs);
+const log = require(paths.logscripts);
+const embedStyles = require(paths.embedstyle);
+
 module.exports = { 
 	data: new SlashCommandBuilder()
         .setName('comments')

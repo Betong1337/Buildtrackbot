@@ -1,7 +1,11 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
-const db = require('../database-connection.js');
-const gf = require('../general-functions.js');
-const log = require('../error_log.js');
+const config = require('../../config.js');
+const { paths } = config;
+
+const db = require(paths.db);
+const gf = require(paths.generalFuncs);
+const log = require(paths.logscripts);
+const embedStyles = require(paths.embedstyle);
 
 module.exports = { 
 	data: new SlashCommandBuilder()
@@ -22,6 +26,8 @@ module.exports = {
 
 	async execute(interaction) {
         try {
+
+            throw new Error("This is error");
             var interactionOptions = interaction.options;
             const ProjectKey = interactionOptions.getString('projectkey');
             const comment = interactionOptions.getString('comment');

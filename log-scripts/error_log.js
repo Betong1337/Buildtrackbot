@@ -1,5 +1,6 @@
 const fs = require('fs') 
-      
+const notify = require('./notify_error');
+
 error = function(error) {
     try {
         const path = './logs';
@@ -37,6 +38,7 @@ error = function(error) {
                 });
             }
         });
+        notify.admin(error, true);
     } catch (err) {
         console.log(err);
         LogError(err);
