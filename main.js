@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const gf = require('./utilities/general-functions.js');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 require('dotenv').config();
 
@@ -9,12 +10,28 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 
 client.commands = new Collection();
 
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commands = [];
+// Grab all the command files from the commands directory you created earlier
+let commandFiles = [];
+const commandPaths = ['./commands/project', './commands/comment', './commands/general'];
+
+for (let i=0;i<commandPaths.length;i++) {
+	commandFiles.push(fs.readdirSync(commandPaths[i]).filter(file => file.endsWith('.js')));
+}
+for (let j=0;j<commandFiles[0].length;j++) {
+	commandFiles[0][j] = commandPaths[0] + "/" + commandFiles[0][j]
+}
+for (let k=0;k<commandFiles[1].length;k++) {
+	commandFiles[1][k] = commandPaths[1] + "/" + commandFiles[1][k]
+}
+for (let l=0;l<commandFiles[2].length;l++) {
+	commandFiles[2][l] = commandPaths[2] + "/" + commandFiles[2][l]
+}
+commandFiles = gf.flattenArray(commandFiles);
 
 for (const file of commandFiles) {
-	const filePath = path.join(commandsPath, file);
-	const command = require(filePath);
+	//const filePath = path.join(commandsPath, file);
+	const command = require(file);
 	// Set a new item in the Collection with the key as the command name and the value as the exported module
 	if ('data' in command && 'execute' in command) {
 		client.commands.set(command.data.name, command);
