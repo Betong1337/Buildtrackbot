@@ -56,3 +56,6 @@ Comment system:
     /vwmycomments:
        [ProjectKey] [Comment]        [Timestamp]        [CommentID]
        BTB-123dsasf "Cleared 100%."  2023-09-09 21:32   COM-ksie23s
+
+Error log system:
+    Writes error to log in /logs and notifies via email.
