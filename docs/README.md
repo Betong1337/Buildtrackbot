@@ -26,10 +26,6 @@ BuildTrackBot can be customized and configured to fit the needs of your server. 
 
 Contributions to BuildTrackBot are welcome! If you have any suggestions, improvements, or bug fixes, feel free to create a pull request or open an issue on the GitHub repository.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Support
 
 If you need assistance or have any questions, please add me on discord: `betong`
