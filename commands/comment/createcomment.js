@@ -27,7 +27,6 @@ module.exports = {
 	async execute(interaction) {
         try {
 
-            throw new Error("This is error");
             var interactionOptions = interaction.options;
             const ProjectKey = interactionOptions.getString('projectkey');
             const comment = interactionOptions.getString('comment');
@@ -73,7 +72,6 @@ module.exports = {
                 return;
             }
 
-            console.log(commentID);
             db.InsertComment(guildID, ProjectKey, username, comment,commentID);
             interaction.reply("Your comment " + '"*' + comment + '*"' + " has been sent!");
 

@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder} = require('discord.js');
 const config = require('../../config.js');
 const { paths } = config;
-console.log(paths);
 const db = require(paths.db);
 const gf = require(paths.generalFuncs);
 const log = require(paths.logscripts);

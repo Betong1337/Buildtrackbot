@@ -131,31 +131,39 @@ delRecord = function(projectKey) {
 
 CheckIfProjectIsInGuild = function(guildID, projectkey) {
     return new Promise(resolve => {
-        var conn = mysql.createConnection(DBCONFIG);
-        const sql = "SELECT * FROM projects WHERE projectkey = ?";
-        conn.query(sql, [projectkey,], function(err, rows) {
-            if (err) throw new Error('CheckIfProjectIsInGuild: ' + err);
-            let data = rows[0];
-            if (data.guild === guildID) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
-        });
+        try {
+            var conn = mysql.createConnection(DBCONFIG);
+            const sql = "SELECT * FROM projects WHERE projectkey = ?";
+            conn.query(sql, [projectkey,], function(err, rows) {
+                if (err) throw new Error('CheckIfProjectIsInGuild: ' + err);
+                let data = rows[0];
+                if (data.guild === guildID) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        } catch(err) {
+            console.log(err);
+        }
     });
 }
 
 GetGuildProjects = function(guildID) {
     return new Promise(resolve => {
-        var conn = mysql.createConnection(DBCONFIG);
-        const sql = "SELECT * FROM projects WHERE guild = ?";
-        conn.query(sql, [guildID,], function(err, rows) {
-            if (err) throw new Error('GetGuildProjects: ' + err);
-            resolve(rows);
-        });
-        conn.end((err) => {
-            if (err) throw new Error('GetGuildProjects_conn_end: ' + err);
-        });
+        try {
+            var conn = mysql.createConnection(DBCONFIG);
+            const sql = "SELECT * FROM projects WHERE guild = ?";
+            conn.query(sql, [guildID,], function(err, rows) {
+                if (err) throw new Error('GetGuildProjects: ' + err);
+                resolve(rows);
+            });
+            conn.end((err) => {
+                if (err) throw new Error('GetGuildProjects_conn_end: ' + err);
+            });
+        } catch (err) {
+            console.log(err);
+        }
     });
 }
 

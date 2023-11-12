@@ -50,6 +50,8 @@ module.exports = {
                     comments = comments + "**" + commentCount + ". " + commentKey + "** " + '*"' + 
                            comment + '"*' + " __" + formattedDateTime + "__" + " **" + projectKey + "**" + "\n\n";
                     commentCount++;
+
+                    
                 }
             }
             const CommentEmbed = embedStyles.commentSectionEmbed(username + "'s Comments", comments);

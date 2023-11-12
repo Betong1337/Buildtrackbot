@@ -13,7 +13,7 @@ client.commands = new Collection();
 const commands = [];
 // Grab all the command files from the commands directory you created earlier
 let commandFiles = [];
-const commandPaths = ['./commands/project', './commands/comment', './commands/general'];
+const commandPaths = ['./commands/project', './commands/comment'];
 
 for (let i=0;i<commandPaths.length;i++) {
 	commandFiles.push(fs.readdirSync(commandPaths[i]).filter(file => file.endsWith('.js')));
@@ -24,9 +24,7 @@ for (let j=0;j<commandFiles[0].length;j++) {
 for (let k=0;k<commandFiles[1].length;k++) {
 	commandFiles[1][k] = commandPaths[1] + "/" + commandFiles[1][k]
 }
-for (let l=0;l<commandFiles[2].length;l++) {
-	commandFiles[2][l] = commandPaths[2] + "/" + commandFiles[2][l]
-}
+
 commandFiles = gf.flattenArray(commandFiles);
 
 for (const file of commandFiles) {

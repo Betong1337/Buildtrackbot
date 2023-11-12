@@ -6,7 +6,8 @@ const paths = {
     db: '../../utilities/database-connection.js',
     embedstyle: '../../utilities/embedstyles.js',
     generalFuncs: '../../utilities/general-functions.js',
-    logscripts: '../../log-scripts/error_log.js'
+    logscripts: '../../log-scripts/error_log.js',
+    notify: '../../log-scripts/notify-error.js'
   };
   
   module.exports = {

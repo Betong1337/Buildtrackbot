@@ -1,5 +1,4 @@
 require('dotenv').config();
-const log = require('./error_log.js');
 const email = process.env.EMAIL;
 const emailPass = process.env.EMAIL_PASS;
 
